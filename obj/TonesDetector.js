@@ -7,7 +7,7 @@ const { SilenceDetector } = require("./SilenceDetector");
 class TonesDetector extends EventEmitter {
     constructor({ name, tones = [], tolerancePercent = 0.02,
         matchThreshold = 8, silenceAmplitude = 0.05,
-        notifications, lockoutTimeoutMs = 5000, resetTimeoutMs = 7000, minRecordingLengthSec = 30, maxRecordingLengthSec }) {
+        notifications, lockoutTimeoutMs = 5000, resetTimeoutMs = 7000 }) {
         super();
 
         this.name = name ? name : ``;
@@ -88,9 +88,7 @@ class TonesDetector extends EventEmitter {
             tones: this.tones,
             tolerancePercent: this.tolerancePercent,
             matchThreshold: this.matchThreshold,
-            notifications: this.notifications,
-            minRecordingLengthSec: this.minRecordingLengthSec,
-            maxRecordingLengthSec: this.maxRecordingLengthSec,
+            notifications: this.notifications
         }
     }
 

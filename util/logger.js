@@ -31,11 +31,11 @@ if (!logger) {
         new winston.transports.Console({
             format: alignColorsAndTime,
         }),
-        new winston.transports.File({
-            filename: 'log.log',
-            level: 'info',
-            format: consoleFormat
-        })
+        // new winston.transports.File({
+        //     filename: 'log.log',
+        //     level: 'info',
+        //     format: consoleFormat
+        // })
     ];
 
 
