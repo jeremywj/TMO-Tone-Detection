@@ -3,7 +3,7 @@ const config = require("config");
 const log = require('../util/logger');
 const NO_DATA_INTERVAL_SEC = 30;
 
-class AudioService{
+class AudioService {
     constructor() {
         this._dataListenerCallbacks = [];
 
@@ -13,11 +13,11 @@ class AudioService{
         this._setNoDataInterval();
     }
 
-    start(){
+    start() {
         this._micInstance.start();
     }
 
-    restart(){
+    restart() {
         log.warning('Restarting mic instance');
         this._micInstance.stop();
         this._setupMic();
@@ -27,7 +27,7 @@ class AudioService{
         this.start();
     }
 
-    _setupMic(){
+    _setupMic() {
         this._micInstance = mic({
             rate: `${config.audio.sampleRate}`,
             channels: `${config.audio.channels}`,
@@ -38,28 +38,29 @@ class AudioService{
         this._micInputStream = this._micInstance.getAudioStream();
     }
 
-    _resetNoDataInterval(){
+    _resetNoDataInterval() {
         clearInterval(this._noDataInterval);
         this._setNoDataInterval();
     }
 
-    _setNoDataInterval(){
+    _setNoDataInterval() {
         this._noDataInterval = setInterval(() => {
-                log.alert(`No Mic Data for ${NO_DATA_INTERVAL_SEC} Seconds`);
-                this.restart();
-            }, NO_DATA_INTERVAL_SEC * 1000);
+            log.alert(`No Mic Data for ${NO_DATA_INTERVAL_SEC} Seconds`);
+            this.restart();
+        }, NO_DATA_INTERVAL_SEC * 1000);
     }
 
-    onData(callback){
+    onData(callback) {
+
         this._dataListenerCallbacks.push(callback);
         this._micInputStream.on('data', callback);
     }
 
-    _rebindDataListenerCallbacks(){
-        this._dataListenerCallbacks.forEach(cb =>  this._micInputStream.on('data', cb));
+    _rebindDataListenerCallbacks() {
+        this._dataListenerCallbacks.forEach(cb => this._micInputStream.on('data', cb));
     }
 
-    listenForMicInputEvents(){
+    listenForMicInputEvents() {
         this.onData(() => {
             this._resetNoDataInterval();
         });
@@ -67,28 +68,28 @@ class AudioService{
     }
 }
 
-function listenForMicInputEvents(micInputStream){
-    micInputStream.on('error', function(err) {
+function listenForMicInputEvents(micInputStream) {
+    micInputStream.on('error', function (err) {
         log.alert("Error in Mic Input Stream: " + err);
         process.exit(1);
     });
 
-    micInputStream.on('processExitComplete', function() {
+    micInputStream.on('processExitComplete', function () {
         log.alert("Got SIGNAL processExitComplete");
     });
 
-    micInputStream.on('startComplete', function() {
+    micInputStream.on('startComplete', function () {
         log.info("Mic Instance Has Started");
     });
 
-    micInputStream.on('stopComplete', function() {
+    micInputStream.on('stopComplete', function () {
         log.alert("Mic Instance Has STOPPED");
     });
 
-    micInputStream.on('resumeComplete', function() {
+    micInputStream.on('resumeComplete', function () {
         log.alert("Mic Instance Has resumed");
     });
 }
 
 
-module.exports = {AudioService, listenForMicInputEvents};
+module.exports = { AudioService, listenForMicInputEvents };

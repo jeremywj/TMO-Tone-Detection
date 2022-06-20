@@ -4,17 +4,13 @@ const path = require('path');
 const { program } = require('commander');
 setupProgram();
 
-const {checkLicense} = require("./util/licence");
-
-const {toneDetector} = require('./bin/toneDetector');
-const {csvToConfig} = require('./bin/csvToConfig');
-const {fdToneNotify} = require('./bin/fdToneNotify');
-const {testNotifications} = require('./bin/testNotifications');
+const { toneDetector } = require('./bin/toneDetector');
+const { csvToConfig } = require('./bin/csvToConfig');
+const { fdToneNotify } = require('./bin/fdToneNotify');
 const log = require('./util/logger');
-const {populateSecretsEnvVar} = require("./util/config.secrets");
 
 
-function setupProgram(){
+function setupProgram() {
     program
         .name("fd-tone-notify")
         .option('--all-tone-detector', 'Secondary functionality: Instead of reading the config file and sending notifications ' +
@@ -40,37 +36,35 @@ function setupProgram(){
     validateOptions(program.opts());
 }
 
-async function main(){
+async function main() {
 
-    await checkLicense();
     const options = program.opts();
-    populateSecretsEnvVar({secretsPath: options.secretsFile, forceSecretsFile: options.forceSecretsFile});
 
-    if(options.csvToConfig)
+    if (options.csvToConfig)
         csvToConfig();
-    else if(options.allToneDetector)
-        toneDetector({webServer: options.webServer});
-    else if(options.testNotifications)
+    else if (options.allToneDetector)
+        toneDetector({ webServer: options.webServer });
+    else if (options.testNotifications)
         testNotifications();
     else
-        fdToneNotify({webServer: options.webServer});
+        fdToneNotify({ webServer: options.webServer });
 }
 
-function overrideEnvVars(options){
-    if(options.debug)
+function overrideEnvVars(options) {
+    if (options.debug)
         process.env.FD_LOG_LEVEL = "debug";
-    if(options.silly)
+    if (options.silly)
         process.env.FD_LOG_LEVEL = "silly";
 
-    if(options.instanceName)
+    if (options.instanceName)
         process.env.NODE_APP_INSTANCE = options.instanceName;
 
-    if(options.port)
+    if (options.port)
         process.env.FD_PORT = Number.parseInt(options.port);
 }
 
-function defaultConfig(){
-    if(!fs.existsSync('./config')){
+function defaultConfig() {
+    if (!fs.existsSync('./config')) {
         console.log('No config directory. Initializing with default configuration');
         fs.mkdirSync('./config');
 
@@ -90,25 +84,25 @@ function defaultConfig(){
     }
 }
 
-function validateOptions(options){
+function validateOptions(options) {
     const mainOptionSelectedCount = [options.testNotifications, options.allToneDetector].filter(v => !!v).length;
-    if(mainOptionSelectedCount > 1)
+    if (mainOptionSelectedCount > 1)
         _exitWithError(`Multi main options selected. Can only selected one of the following: --all-tone-detector, --test-notifications`);
-    if(options.port && !options.webServer)
+    if (options.port && !options.webServer)
         log.warning(`--port <port> option is meaningless without the --web-server option. ` +
             `Monitoring interface will only start on specified port when --web-server option is set`)
 }
 
-function _exitWithError(message){
+function _exitWithError(message) {
     log.error(`Cannot run webserver in --test-notification mode`);
     process.exit(1);
 }
 
 main()
     .then(r => {
-            log.silly(`Started`);
-            setTimeout(() => log.silly('Main HB'), 10);
-        }
+        log.silly(`Started`);
+        setTimeout(() => log.silly('Main HB'), 10);
+    }
     )
     .catch(err => {
         log.crit(err.stack)
