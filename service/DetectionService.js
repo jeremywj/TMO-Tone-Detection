@@ -41,9 +41,7 @@ class DetectionService extends EventEmitter {
     }
 
     __processData(decodedData) {
-        fs.appendFile('/home/pi/audio.mp3', decodedData, function (err) {
-            if (err) throw err;
-        });
+
         const dataChunks = this._audioProcessor.chunkAudioData(decodedData);
 
         dataChunks.forEach(chunk => {

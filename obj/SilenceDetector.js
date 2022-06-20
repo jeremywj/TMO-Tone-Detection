@@ -7,7 +7,6 @@ class SilenceDetector extends EventEmitter {
         super();
         this.matchThreshold = matchThreshold;
         this.silenceAmplitude = silenceAmplitude;
-
         this._silenceMatchCount = 0;
     }
 

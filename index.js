@@ -3,7 +3,7 @@ const config = require("config");
 const log = require('./util/logger');
 const { AudioService } = require('./service/AudioService');
 
-async function TMOToneDetect({ webServer = false } = {}) {
+async function TMOToneDetect() {
     const audioInterface = new AudioService();
     const detectionService = new DetectionService({
         audioInterface,
