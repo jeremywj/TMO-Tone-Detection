@@ -35,7 +35,6 @@ async function _webhooks(params, prePostType) {
     if (webhooks.length === 0)
         return;
 
-    log.info(`Sending ${webhooks.length}x ${prePostType} Recording webhook notifications.`);
     return webhooks.map(webhook => {
         const options = {
             address: webhook.address,

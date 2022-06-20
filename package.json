@@ -1,28 +1,15 @@
 {
   "name": "fd-tone-notify",
   "version": "0.1.0",
-  "description": "Dispatch Tone Notification Software for Fire Departments and Enthusiasts",
-  "homepage": "https://fdtonenotify.com/",
+  "description": "TMO Tone Detection",
+  "homepage": "https://textmeout.com/",
   "main": "index.js",
   "bin": "index.js",
-  "funding": {
-    "type": "patreon",
-    "url": "https://www.patreon.com/fdtonenotify"
-  },
   "scripts": {
-    "start": "node index.js",
-    "test": "mocha",
-    "build": "./build.sh"
+    "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kjdElectronics/fd-tone-notify.git"
-  },
-  "author": "Kevin J Dolan (kjdElectronics)",
+  "author": "Jeremy Jefferson",
   "license": "GNU General Public License v3.0",
-  "bugs": {
-    "url": "https://github.com/kjdElectronics/fd-tone-notify/issues"
-  },
   "dependencies": {
     "@types/mocha": "^8.2.0",
     "@types/mz": "^2.7.3",

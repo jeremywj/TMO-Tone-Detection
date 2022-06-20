@@ -28,14 +28,7 @@ class TonesDetector extends EventEmitter {
         this.resetTimeoutMs = resetTimeoutMs;
         this._fullResetTimeout = null;
 
-        //Not used here but accessed by the RecordingService
-        this.minRecordingLengthSec = minRecordingLengthSec;
-        this.maxRecordingLengthSec = maxRecordingLengthSec ? maxRecordingLengthSec : minRecordingLengthSec * 1.5;
-        if (this.maxRecordingLengthSec < this.minRecordingLengthSec) {
-            log.alert(`For tone ${name} the minRecordingLengthSec is ${this.minRecordingLengthSec} and the maxRecordingLengthSec ` +
-                `is ${maxRecordingLengthSec}. This is invalid and maxRecordingLengthSec will default to 1.5x minRecordingLengthSec.`);
-            this.maxRecordingLengthSec = this.minRecordingLengthSec * 1.5;
-        }
+
     }
 
     __buildToneDetectors() {
@@ -130,6 +123,7 @@ class TonesDetector extends EventEmitter {
     }
 
     __matchString() {
+        return "TONE DETECTED"
         if (this.tones.length === 1)
             return "Single Tone Matched";
         return "MULTI TONE MATCH";

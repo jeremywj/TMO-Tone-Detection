@@ -13,22 +13,10 @@ const log = require('./util/logger');
 function setupProgram() {
     program
         .name("fd-tone-notify")
-        .option('--all-tone-detector', 'Secondary functionality: Instead of reading the config file and sending notifications ' +
-            'when specific tones are detected this option activates multi tone detector mode. In this mode the frequency spectrum from 300Hz to 4000Hz ' +
-            'is monitored. When a multi tone is detected the result is logged to the console. Use this mode to determine the frequencies to monitor and ' +
-            'enter the results in the "tones" parameter for the corresponding department.')
-        .option('--test-notifications', 'Send test notifications')
-        .option('--csv-to-config', 'Build a config file from a csv')
         .option('--debug', 'Overrides FD_LOG_LEVEL environment var forcing the log level to debug')
         .option('--silly', 'Overrides FD_LOG_LEVEL environment var forcing the log level to silly')
         .option('--instance-name', 'Overrides NODE_APP_INSTANCE environment allowing different config files for different instances running' +
             ' on the same machine. Example: "--instance-name my-fd" will load config files default-my-fd.json and local-my-fd.json')
-        .option('--web-server', 'Starts the webserver. The webserver provides remote monitoring capability and ability to listen to live audio')
-        .option('--port <port>', 'Overrides FD_PORT environment var setting the port for the web server. Has no effect without --web-server option. Default port 3000')
-        .option('--secrets-file <path>', 'Path to secrets file. By default secrets will be loaded from config/secrets.json. Use this option to specify a different path')
-        .option('--force-secrets-file', 'Using this option forces all secrets to be read from the secrets file (Either the ' +
-            'default or the path specified by --secrets-path). Values from environment variables will be disregarded. If the file cannot be loaded or parsed ' +
-            'the application will exit with code 99 indicating an invalid secrets configuration.')
         .parse();
 
     defaultConfig();
@@ -71,10 +59,6 @@ function defaultConfig() {
         // javascript-obfuscator:disable
         const defaultConfig = require('./config/default.json');
         fs.writeFileSync('./config/default.json', JSON.stringify(defaultConfig, null, 2));
-
-        // javascript-obfuscator:disable
-        const secretsTemplate = require('./config/secrets.template.json');
-        fs.writeFileSync('./config/secrets.template.json', JSON.stringify(secretsTemplate, null, 2));
 
         //For Packing
         // javascript-obfuscator:disable
