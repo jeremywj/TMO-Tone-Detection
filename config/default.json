@@ -3,7 +3,6 @@
     "inputDevice": "hw:1,0",
     "sampleRate": 44100,
     "frequencyScaleFactor": 1,
-    "recordingScaleFactor": 2,
     "silenceAmplitude": 0.05,
     "channels": 1
   },
@@ -24,21 +23,11 @@
         "resetTimeoutMs": 4000,
         "isRecordingEnabled": true,
         "lockoutTimeoutMs": 0,
-        "minRecordingLengthSec": 45,
-        "maxRecordingLengthSec": 60,
         "notifications": {
           "preRecording": {
             "webhooks": [
               {
-                "address": "https://scanwcc.com",
-                "headers": {
-                  "custom-header": "value",
-                  "from-env-var": "CUSTOM_ENV_VAR_AUTH_HEADER",
-                  "note": "from-env-var set to value of 'AUTH_HEADER' environment var or null if the variable is not set"
-                },
-                "custom": {
-                  "anyObject": true
-                }
+                "address": "https://scanwcc.com"
               }
             ]
           }
@@ -47,13 +36,7 @@
     ]
   },
   "coralogix": {
-    "applicationName": "FD-Tone-Notify",
-    "subsystemName": "Test"
-  },
-  "email": {
-    "from": "test@example.com",
-    "host": "smtp.sendgrid.net",
-    "port": 465,
-    "secure": true
+    "applicationName": "TMO-Tone-Detection",
+    "subsystemName": "TMO"
   }
 }
