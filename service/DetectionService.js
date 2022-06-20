@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const { AudioProcessor } = require("../obj/AudioProcessor");
 const { decodeRawAudioBuffer } = require("../util/util");
 const EventEmitter = require('events');
-const { sendPreRecordingNotifications } = require('../notifiers');
+const { sendNotifications } = require('../notifiers');
 const { NotificationParams } = require('../obj/NotificationParams');
 const fs = require("fs");
 const NO_DATA_INTERVAL_SEC = 30;
@@ -90,7 +90,7 @@ class DetectionService extends EventEmitter {
 
             let notificationPromise = null;
             if (this.areNotificationsEnabled && notifications) { //Notifications enabled on the service and detector
-                notificationPromise = sendPreRecordingNotifications(notificationParams)
+                notificationPromise = sendNotifications(notificationParams)
                     .then(results => {
                         log.info(`All notifications for ${name} have finished processing`);
                         return results;

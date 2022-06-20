@@ -15,14 +15,13 @@
       {
         "name": "Test Fire Department",
         "tones": [
-          911,
           3000
         ],
         "matchThreshold": 6,
         "tolerancePercent": 0.02,
         "resetTimeoutMs": 4000,
         "isRecordingEnabled": true,
-        "lockoutTimeoutMs": 0,
+        "lockoutTimeoutMs": 5000,
         "notifications": {
           "preRecording": {
             "webhooks": [

@@ -11,10 +11,6 @@ class NotificationParams {
         this.timestamp = timestamp ? timestamp : new Date().getTime();
         this.matchAverages = matchAverages;
         this.notifications = notifications;
-        this.filename = filename;
-        this.attachFile = attachFile;
-        this.message = message;
-        this.isTest = isTest;
     }
 
     toObj() {
@@ -38,10 +34,6 @@ class NotificationParams {
         return this.__getNotificationOptions({ prePostType, notificationKey: "webhooks" });
     }
 
-    getCommands(prePostType) {
-        return this.__getNotificationOptions({ prePostType, notificationKey: "externalCommands" });
-    }
-
     __getNotificationOptions({ prePostType, notificationKey }) {
         const options = this.notifications[this.__getKeyForPrePost(prePostType)];
         if (options && options[notificationKey])
@@ -50,11 +42,7 @@ class NotificationParams {
     }
 
     __getKeyForPrePost(prePostType) {
-        if (prePostType === PRE)
-            return "preRecording";
-        else if (prePostType === POST)
-            return "postRecording";
-        throw new Error("Invalid PrePost type")
+        return "preRecording";
     }
 }
 
