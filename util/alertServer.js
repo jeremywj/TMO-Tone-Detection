@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const log = require('../util/logger');
+const log = require('./logger');
 
 async function alertServer(id) {
     var address = "https://texttmeout.com?id=" + id

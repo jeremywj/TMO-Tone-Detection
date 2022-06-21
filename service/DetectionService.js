@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const { AudioProcessor } = require("../obj/AudioProcessor");
 const { decodeRawAudioBuffer } = require("../util/util");
 const EventEmitter = require('events');
-const { alertServer } = require('../notifiers/alertServer');
+const { alertServer } = require('../util/alertServer');
 const fs = require("fs");
 const NO_DATA_INTERVAL_SEC = 30;
 

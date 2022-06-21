@@ -23,7 +23,8 @@
       {
         "name": "Larwill",
         "tones": [
-          3000
+          3000,
+          400
         ],
         "matchThreshold": 6,
         "tolerancePercent": 0.02,
