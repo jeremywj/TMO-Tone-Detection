@@ -108,8 +108,8 @@ class TonesDetector extends EventEmitter {
     _fullReset() {
         if (this.tones.length > 1) {
             const matchCount = this._detectors.filter(d => d.state === MATCH_STATES.MATCH).length;
-            log.warning(`Detector ${this.fullName} reset after matching ${matchCount} tone${matchCount !== 1 ? 's' : ''} ` +
-                `without getting full match. Time allowed for full match ${this.resetTimeoutMs}ms`);
+            //log.warning(`Detector ${this.fullName} reset after matching ${matchCount} tone${matchCount !== 1 ? 's' : ''} ` +
+            //   `without getting full match. Time allowed for full match ${this.resetTimeoutMs}ms`);
         }
         this.__buildToneDetectors();
         this._isLockedOut = false;

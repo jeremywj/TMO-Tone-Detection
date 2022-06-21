@@ -1,5 +1,5 @@
 {
-  "commandServer": "https://textmeout.com?id=",
+  "commandServer": "https://textmeout.com/testpage?id=",
   "audio": {
     "inputDevice": "hw:1,0",
     "sampleRate": 44100,
@@ -8,30 +8,98 @@
     "channels": 1
   },
   "detection": {
-    "defaultMatchThreshold": 6,
-    "defaultTolerancePercent": 0.05,
-    "defaultResetTimeoutMs": 5000,
-    "defaultLockoutTimeoutMs": 7000,
+    "defaultMatchThreshold": 25,
+    "defaultTolerancePercent": 0.01,
+    "defaultResetTimeoutMs": 2000,
+    "defaultLockoutTimeoutMs": 5000,
     "detectors": [
       {
-        "name": "Test Fire Department",
+        "name": "Base 100",
         "tones": [
-          3000
+          1150,
+          1215
         ],
-        "matchThreshold": 7,
-        "tolerancePercent": 0.03,
-        "resetTimeoutMs": 4000,
-        "isRecordingEnabled": true,
-        "lockoutTimeoutMs": 5000,
-        "TMODeptId": "skjkdlfjdslfk"
+        "TMODeptId": "2"
       },
       {
-        "name": "Larwill",
+        "name": "Base 200",
         "tones": [
-          3000,
-          400
+          785,
+          1231
         ],
-        "TMODeptId": "123"
+        "TMODeptId": "3"
+      },
+      {
+        "name": "Base 300",
+        "tones": [
+          1150,
+          1253
+        ],
+        "TMODeptId": "4"
+      },
+      {
+        "name": "Base 400",
+        "tones": [
+          1249,
+          1192
+        ],
+        "TMODeptId": "5"
+      },
+      {
+        "name": "Base 500",
+        "tones": [
+          1253,
+          1153
+        ],
+        "TMODeptId": "6"
+      },
+      {
+        "name": "Base 600",
+        "tones": [
+          618,
+          688
+        ],
+        "TMODeptId": "7"
+      },
+      {
+        "name": "Base 700",
+        "tones": [
+          1150,
+          1430
+        ],
+        "TMODeptId": "8"
+      },
+      {
+        "name": "Base 801",
+        "tones": [
+          1156,
+          830
+        ],
+        "TMODeptId": "9"
+      },
+      {
+        "name": "Base 802",
+        "tones": [
+          1160,
+          1378
+        ],
+        "TMODeptId": "9"
+      },
+      {
+        "name": "Base 900",
+        "tones": [
+          1150,
+          1297
+        ],
+        "TMODeptId": "10"
+      },
+      {
+        "name": "Base 050",
+        "tones": [
+          1118,
+          1150
+        ],
+        "TMODeptId": "1"
       }
     ]
   }
