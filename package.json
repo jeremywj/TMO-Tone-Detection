@@ -1,5 +1,5 @@
 {
-  "name": "fd-tone-notify",
+  "name": "TMO Tone Detection",
   "version": "0.1.0",
   "description": "TMO Tone Detection",
   "homepage": "https://textmeout.com/",
@@ -9,7 +9,7 @@
     "start": "node index.js"
   },
   "author": "Jeremy Jefferson",
-  "license": "GNU General Public License v3.0",
+  "license": "Private",
   "dependencies": {
     "@types/mocha": "^8.2.0",
     "@types/mz": "^2.7.3",
