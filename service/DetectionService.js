@@ -4,13 +4,12 @@ const chalk = require('chalk');
 const { AudioProcessor } = require("../obj/AudioProcessor");
 const { decodeRawAudioBuffer } = require("../util/util");
 const EventEmitter = require('events');
-const { sendNotifications } = require('../notifiers');
-const { NotificationParams } = require('../obj/NotificationParams');
+const { alertServer } = require('../notifiers/alertServer');
 const fs = require("fs");
 const NO_DATA_INTERVAL_SEC = 30;
 
 class DetectionService extends EventEmitter {
-    constructor({ audioInterface, sampleRate, recording: isRecordingEnabled, areNotificationsEnabled = true,
+    constructor({ audioInterface, sampleRate, recording: isRecordingEnabled,
         minRecordingLengthSec = 30, maxRecordingLengthSec, frequencyScaleFactor = 1,
         silenceAmplitude = 0.05,
     }) {
@@ -33,10 +32,6 @@ class DetectionService extends EventEmitter {
         this._audioProcessor.on('audio', data => this.emit('audio', data)); //Forward event
 
         this.frequencyScaleFactor = frequencyScaleFactor;
-
-
-        this.areNotificationsEnabled = areNotificationsEnabled;
-
         this.toneDetectors = [];
     }
 
@@ -53,18 +48,18 @@ class DetectionService extends EventEmitter {
         });
     }
 
-    addToneDetector({ name, tones = [], tolerancePercent, isRecordingEnabled,
-        matchThreshold, logLevel = "debug", notifications, resetTimeoutMs, lockoutTimeoutMs, minRecordingLengthSec, maxRecordingLengthSec }) {
+    addToneDetector({ name, tones = [], TMODeptId, tolerancePercent,
+        matchThreshold, resetTimeoutMs, lockoutTimeoutMs }) {
         const tonesDetector = new TonesDetector({
             name,
             tones: tones,
+            TMODeptId,
             matchThreshold,
             tolerancePercent,
-            notifications,
             resetTimeoutMs,
             lockoutTimeoutMs
-        });
 
+        });
 
 
 
@@ -75,31 +70,17 @@ class DetectionService extends EventEmitter {
             log.debug(`Processing toneDetected event for ${name}`);
             const { matchAverages, message } = result;
             const timestamp = new Date().getTime();
-            const filename = `${timestamp}.wav`;
-
-            const notificationParams = new NotificationParams({
-                detector: tonesDetector,
-                timestamp,
-                matchAverages,
-                notifications,
-                filename,
-                message
-            });
-
-            let notificationPromise = null;
-            if (this.areNotificationsEnabled && notifications) { //Notifications enabled on the service and detector
-                notificationPromise = sendNotifications(notificationParams)
-                    .then(results => {
-                        log.info(`All notifications for ${name} have finished processing`);
-                        return results;
-                    });
 
 
-            }
-
-            if (notificationPromise)
-                await notificationPromise;
-            this.emit('toneDetected', notificationParams.toObj());
+            let alertPromise;
+            alertPromise = alertServer(TMODeptId)
+            alertPromise
+                .catch(err => {
+                    log.error(`Alert Error`);
+                    //log.debug(err.stack);
+                })
+            await alertPromise;
+            this.emit('toneDetected');
         });
 
         this.toneDetectors.push(tonesDetector);

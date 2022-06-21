@@ -7,13 +7,21 @@
     "channels": 1
   },
   "detection": {
-    "defaultMatchThreshold": 6,
-    "defaultTolerancePercent": 0.05,
-    "defaultResetTimeoutMs": 4000,
-    "defaultLockoutTimeoutMs": 0,
     "detectors": [
       {
         "name": "Test Fire Department",
+        "tones": [
+          3000
+        ],
+        "matchThreshold": 7,
+        "tolerancePercent": 0.03,
+        "resetTimeoutMs": 4000,
+        "isRecordingEnabled": true,
+        "lockoutTimeoutMs": 5000,
+        "TMODeptId": "skjkdlfjdslfk"
+      },
+      {
+        "name": "Larwill",
         "tones": [
           3000
         ],
@@ -22,20 +30,8 @@
         "resetTimeoutMs": 4000,
         "isRecordingEnabled": true,
         "lockoutTimeoutMs": 5000,
-        "notifications": {
-          "preRecording": {
-            "webhooks": [
-              {
-                "address": "https://scanwcc.com"
-              }
-            ]
-          }
-        }
+        "TMODeptId": "123"
       }
     ]
-  },
-  "coralogix": {
-    "applicationName": "TMO-Tone-Detection",
-    "subsystemName": "TMO"
   }
 }

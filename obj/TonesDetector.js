@@ -5,16 +5,16 @@ const log = require('../util/logger');
 const { SilenceDetector } = require("./SilenceDetector");
 
 class TonesDetector extends EventEmitter {
-    constructor({ name, tones = [], tolerancePercent = 0.02,
+    constructor({ name, tones = [], TMODeptId, tolerancePercent = 0.02,
         matchThreshold = 8, silenceAmplitude = 0.05,
-        notifications, lockoutTimeoutMs = 5000, resetTimeoutMs = 7000 }) {
+        lockoutTimeoutMs = 5000, resetTimeoutMs = 7000 }) {
         super();
 
         this.name = name ? name : ``;
         this.tones = tones;
         this.tolerancePercent = tolerancePercent;
         this.matchThreshold = matchThreshold;
-        this.notifications = notifications;
+        this.TMODeptId = TMODeptId;
         this.__buildToneDetectors();
         this._silenceDetector = new SilenceDetector({ silenceAmplitude, matchThreshold });
         this._silenceDetector.on('toneDetected', () => {
@@ -35,6 +35,7 @@ class TonesDetector extends EventEmitter {
         this._detectors = this.tones.map(tone =>
             new ToneDetector({
                 tone,
+                TMODeptId: this.TMODeptId,
                 tolerancePercent: this.tolerancePercent,
                 matchThreshold: this.matchThreshold
             }
@@ -88,7 +89,7 @@ class TonesDetector extends EventEmitter {
             tones: this.tones,
             tolerancePercent: this.tolerancePercent,
             matchThreshold: this.matchThreshold,
-            notifications: this.notifications
+            TMODeptId: this.TMODeptId
         }
     }
 

@@ -8,19 +8,19 @@ const chalk = require('chalk');
 const { arrayAverage } = require("../util/util");
 
 class ToneDetector {
-    constructor({ tone, tolerancePercent, matchThreshold }) {
+    constructor({ tone, TMODeptId, tolerancePercent, matchThreshold }) {
         const _tone = Number(tone);
         if (isNaN(_tone)) {
             log.error(`The provided tone ${tone} is not a valid number.`);
             throw new Error(`${tone} is not a valid number`);
         }
-
         this.tone = _tone;
         this.tolerancePercent = tolerancePercent;
         this.matchThreshold = matchThreshold;
-
+        this.TMODeptId = TMODeptId;
         this._matches = [];
         this._unmatchedCount = 0
+
     }
 
     get _matchCount() {
