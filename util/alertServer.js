@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
 const log = require('./logger');
-
+const config = require("config");
 async function alertServer(id) {
-    var address = "https://texttmeout.com?id=" + id
+    var address = config.commandServer + id
     return fetch(address, {
         method: 'post',
         body: '',

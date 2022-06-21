@@ -1,4 +1,5 @@
 {
+  "commandServer": "https://textmeout.com?id=",
   "audio": {
     "inputDevice": "hw:1,0",
     "sampleRate": 44100,
@@ -7,6 +8,10 @@
     "channels": 1
   },
   "detection": {
+    "defaultMatchThreshold": 6,
+    "defaultTolerancePercent": 0.05,
+    "defaultResetTimeoutMs": 5000,
+    "defaultLockoutTimeoutMs": 7000,
     "detectors": [
       {
         "name": "Test Fire Department",
@@ -26,11 +31,6 @@
           3000,
           400
         ],
-        "matchThreshold": 6,
-        "tolerancePercent": 0.02,
-        "resetTimeoutMs": 4000,
-        "isRecordingEnabled": true,
-        "lockoutTimeoutMs": 5000,
         "TMODeptId": "123"
       }
     ]
