@@ -9,7 +9,6 @@ const detectionService = new DetectionService({
     sampleRate: config.audio.sampleRate,
     frequencyScaleFactor: config.audio.frequencyScaleFactor,
 });
-
 config.detection.detectors.forEach(detectorConfig => {
     const options = {
         name: detectorConfig.name,
@@ -25,5 +24,4 @@ config.detection.detectors.forEach(detectorConfig => {
         + `Match Threshold: ${options.matchThreshold}, Tolerance: ${options.tolerancePercent * 100}%`);
     detectionService.addToneDetector(options);
 });
-
 audioInterface.start();

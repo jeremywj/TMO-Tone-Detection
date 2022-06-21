@@ -9,8 +9,7 @@ const fs = require("fs");
 const NO_DATA_INTERVAL_SEC = 30;
 
 class DetectionService extends EventEmitter {
-    constructor({ audioInterface, sampleRate, recording: isRecordingEnabled,
-        minRecordingLengthSec = 30, maxRecordingLengthSec, frequencyScaleFactor = 1,
+    constructor({ audioInterface, sampleRate, frequencyScaleFactor = 1,
         silenceAmplitude = 0.05,
     }) {
         super();
@@ -41,7 +40,7 @@ class DetectionService extends EventEmitter {
 
         dataChunks.forEach(chunk => {
 
-            const { pitch, clarity } = this._audioProcessor.getPitchWithClarity(chunk);
+            const { pitch } = this._audioProcessor.getPitchWithClarity(chunk);
             this.toneDetectors.forEach(tonesDetector => {
                 tonesDetector.processValues({ pitchValues: [pitch], raw: chunk })
             })
@@ -77,7 +76,6 @@ class DetectionService extends EventEmitter {
             alertPromise
                 .catch(err => {
                     log.error(`Alert Error`);
-                    //log.debug(err.stack);
                 })
             await alertPromise;
             this.emit('toneDetected');
