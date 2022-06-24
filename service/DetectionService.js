@@ -6,6 +6,7 @@ const { decodeRawAudioBuffer } = require("../util/util");
 const EventEmitter = require('events');
 const { alertServer } = require('../util/alertServer');
 const fs = require("fs");
+const { spawn } = require('child_process')
 const NO_DATA_INTERVAL_SEC = 30;
 
 class DetectionService extends EventEmitter {
@@ -13,12 +14,36 @@ class DetectionService extends EventEmitter {
         silenceAmplitude = 0.05,
     }) {
         super();
-
         this._audioInterface = audioInterface;
+        function start_ffmpeg() {
+            let process = spawn('ffmpeg', [
+                //'-re',
+                //'-ss',
+                //'19',
+                '-f',
+                'wav',
+                '-i',
+                '-',
+                '-f',
+                'mp3',
+                'icecast://source:popcorn@wcstream.scanwc.com:8000/testStream'
+            ])
+            return process
+        }
+        let ffmpeg = start_ffmpeg();
+
+        //ffmpeg -re -ss 19 -i - -f mp3 icecast://source:popcorn@wcstream.scanwc.com:8000/testStream        this._audioInterface = audioInterface;
         if (audioInterface) {
             this._audioInterface.onData(async (rawBuffer) => {
-
+                try {
+                    ffmpeg.stdin.write(rawBuffer)
+                }
+                catch (e) {
+                    console.log(e)
+                    process.exit(1);
+                }
                 const decoded = decodeRawAudioBuffer(rawBuffer);
+
                 this.__processData(decoded);
 
             });
@@ -47,8 +72,10 @@ class DetectionService extends EventEmitter {
         });
     }
 
-    addToneDetector({ name, tones = [], TMODeptId, tolerancePercent,
-        matchThreshold, resetTimeoutMs, lockoutTimeoutMs }) {
+    addToneDetector({
+        name, tones = [], TMODeptId, tolerancePercent,
+        matchThreshold, resetTimeoutMs, lockoutTimeoutMs
+    }) {
         const tonesDetector = new TonesDetector({
             name,
             tones: tones,
