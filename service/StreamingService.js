@@ -8,11 +8,7 @@ class StreamingService {
         this.riff = null;
     }
     startProcess() {
-        console.log('restarting')
         this.ffmpeg = spawn('ffmpeg', [
-            //'-re',
-            //'-ss',
-            //'19',
             '-f',
             'wav',
             '-i',
@@ -26,6 +22,11 @@ class StreamingService {
             this.ffmpeg.stdin.write(headerBuffer)
         }
         this.ffmpeg.on('exit', function () {
+            this.ffmpeg = null;
+            this.startProcess;
+        })
+        this.ffmpeg.on('close', function () {
+            this.ffmpeg = null;
             this.startProcess;
         })
         this.ffmpeg.stderr.on('data', function (data) {
@@ -33,22 +34,28 @@ class StreamingService {
 
     }
     streamAudioBuffer(rawBuffer) {
+        var proceed = true;
+        if (this.ffmpeg.signalCode != null) {
+            proceed = false;
+        }
+        if (this.ffmpeg.exitCode != null) {
+            proceed = false;
+        }
         if (this.ffmpeg == null) {
+            proceed = false;
+        }
+        if (proceed) {
+            this.ffmpeg.stdin.write(rawBuffer)
             return;
         }
-        if (this.ffmpeg.exitCode == null) {
-            this.ffmpeg.stdin.write(rawBuffer)
-        } else {
-            console.log('uh oh')
-            this.startProcess();
-        }
+        console.log("Restarting ffmpeg")
+        this.startProcess();
+        return true;
+
     }
     setRiff(riff) {
         this.riff = riff;
     }
-
-
-
 }
 
 module.exports = { StreamingService };
