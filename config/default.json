@@ -1,7 +1,7 @@
 {
   "commandServer": "https://textmeout.com/testpage?id=",
   "audio": {
-    "inputDevice": "hw:1,0",
+    "inputDevice": "hw:2,0",
     "sampleRate": 44100,
     "frequencyScaleFactor": 1,
     "silenceAmplitude": 0.05,

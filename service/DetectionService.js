@@ -6,46 +6,28 @@ const { decodeRawAudioBuffer } = require("../util/util");
 const EventEmitter = require('events');
 const { alertServer } = require('../util/alertServer');
 const fs = require("fs");
-const { spawn } = require('child_process')
-const NO_DATA_INTERVAL_SEC = 30;
-
+const wav = require('wav');
+const { Readable } = require("stream");
+const readable = new Readable();
+readable._read = () => { }
 class DetectionService extends EventEmitter {
-    constructor({ audioInterface, sampleRate, frequencyScaleFactor = 1,
+    constructor({ audioInterface, streamingService, sampleRate, frequencyScaleFactor = 1,
         silenceAmplitude = 0.05,
     }) {
         super();
         this._audioInterface = audioInterface;
-        function start_ffmpeg() {
-            let process = spawn('ffmpeg', [
-                //'-re',
-                //'-ss',
-                //'19',
-                '-f',
-                'wav',
-                '-i',
-                '-',
-                '-f',
-                'mp3',
-                'icecast://source:popcorn@wcstream.scanwc.com:8000/testStream'
-            ])
-            return process
-        }
-        let ffmpeg = start_ffmpeg();
-
-        //ffmpeg -re -ss 19 -i - -f mp3 icecast://source:popcorn@wcstream.scanwc.com:8000/testStream        this._audioInterface = audioInterface;
         if (audioInterface) {
+            var riff = new wav.Reader();
+            readable.pipe(riff)
+            riff.on('format', function (format) {
+                streamingService.setRiff(format)
+            });
+
             this._audioInterface.onData(async (rawBuffer) => {
-                try {
-                    ffmpeg.stdin.write(rawBuffer)
-                }
-                catch (e) {
-                    console.log(e)
-                    process.exit(1);
-                }
+                readable.push(rawBuffer)
+                streamingService.streamAudioBuffer(rawBuffer)
                 const decoded = decodeRawAudioBuffer(rawBuffer);
-
                 this.__processData(decoded);
-
             });
         }
         else

@@ -2,9 +2,11 @@ const { DetectionService } = require("./service/DetectionService");
 const config = require("config");
 const log = require('./util/logger');
 const { AudioService } = require('./service/AudioService');
+const { StreamingService } = require('./service/StreamingService');
 const audioInterface = new AudioService();
+const streamingService = new StreamingService();
 const detectionService = new DetectionService({
-    audioInterface,
+    audioInterface, streamingService,
     silenceAmplitude: config.audio.silenceAmplitude,
     sampleRate: config.audio.sampleRate,
     frequencyScaleFactor: config.audio.frequencyScaleFactor,
