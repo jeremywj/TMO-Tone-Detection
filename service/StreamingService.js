@@ -23,14 +23,12 @@ class StreamingService {
         ])
         if (this.riff != null) {
             var headerBuffer = getFileHeaders(this.riff)
-            console.info(headerBuffer)
             this.ffmpeg.stdin.write(headerBuffer)
         }
         this.ffmpeg.on('exit', function () {
             this.startProcess;
         })
         this.ffmpeg.stderr.on('data', function (data) {
-            //console.log('stderr: ' + data);
         });
 
     }
