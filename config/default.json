@@ -12,7 +12,10 @@
     "port": 8000,
     "username": "source",
     "password": "3HDPcnXz8kTrKAwU",
-    "mount": "testStream"
+    "mount": "testStream",
+    "name": "Whitley County Fire",
+    "description": "Whitley County Fire",
+    "genre": "Live Scanner"
   },
   "detection": {
     "defaultMatchThreshold": 25,

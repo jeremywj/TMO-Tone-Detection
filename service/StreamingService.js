@@ -1,5 +1,4 @@
 const config = require("config");
-const { start } = require("repl");
 const { spawn } = require('child_process');
 var getFileHeaders = require('wav-headers');
 class StreamingService {
@@ -16,6 +15,12 @@ class StreamingService {
             '-',
             '-f',
             'mp3',
+            '-ice_name',
+            '"' + stream.name + '"',
+            '-ice_description',
+            '"' + stream.description + '"',
+            '-ice_genre',
+            '"' + stream.genre + '"',
             "icecast://" + stream.username + ":" + stream.password + "@" + stream.server + ":" + stream.port + "/" + stream.mount
         ])
         if (this.riff != null) {
@@ -31,6 +36,7 @@ class StreamingService {
             this.startProcess;
         })
         this.ffmpeg.stderr.on('data', function (data) {
+
         });
 
     }
