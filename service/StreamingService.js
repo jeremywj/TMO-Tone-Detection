@@ -8,6 +8,7 @@ class StreamingService {
         this.riff = null;
     }
     startProcess() {
+        var stream = config.stream;
         this.ffmpeg = spawn('ffmpeg', [
             '-f',
             'wav',
@@ -15,7 +16,7 @@ class StreamingService {
             '-',
             '-f',
             'mp3',
-            'icecast://source:3HDPcnXz8kTrKAwU@wcstream.scanwc.com:8000/testStream'
+            "icecast://" + stream.username + ":" + stream.password + "@" + stream.server + ":" + stream.port + "/" + stream.mount
         ])
         if (this.riff != null) {
             var headerBuffer = getFileHeaders(this.riff)

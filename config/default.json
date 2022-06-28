@@ -7,6 +7,13 @@
     "silenceAmplitude": 0.05,
     "channels": 1
   },
+  "stream": {
+    "server": "wcstream.scanwc.com",
+    "port": 8000,
+    "username": "source",
+    "password": "3HDPcnXz8kTrKAwU",
+    "mount": "testStream"
+  },
   "detection": {
     "defaultMatchThreshold": 25,
     "defaultTolerancePercent": 0.01,
