@@ -24,7 +24,6 @@ class DetectionService extends EventEmitter {
                 streamingService.setRiff(format)
                 gotRiff = true;
             });
-
             this._audioInterface.onData(async (rawBuffer) => {
                 if (gotRiff == false) {
                     readable.push(rawBuffer)
@@ -34,30 +33,21 @@ class DetectionService extends EventEmitter {
                 this.__processData(decoded);
             });
         }
-        else
-            log.warning(`Detection Service: No audioInterface. Should be used for testing only`);
-
         this._audioProcessor = new AudioProcessor({ sampleRate, silenceAmplitude, frequencyScaleFactor });
         this._audioProcessor.on('pitchData', data => this.emit('pitchData', data)); //Forward event
         this._audioProcessor.on('audio', data => this.emit('audio', data)); //Forward event
-
         this.frequencyScaleFactor = frequencyScaleFactor;
         this.toneDetectors = [];
     }
-
     __processData(decodedData) {
-
         const dataChunks = this._audioProcessor.chunkAudioData(decodedData);
-
         dataChunks.forEach(chunk => {
-
             const { pitch } = this._audioProcessor.getPitchWithClarity(chunk);
             this.toneDetectors.forEach(tonesDetector => {
                 tonesDetector.processValues({ pitchValues: [pitch], raw: chunk })
             })
         });
     }
-
     addToneDetector({
         name, tones = [], TMODeptId, tolerancePercent,
         matchThreshold, resetTimeoutMs, lockoutTimeoutMs
@@ -72,18 +62,10 @@ class DetectionService extends EventEmitter {
             lockoutTimeoutMs
 
         });
-
-
-
-
         tonesDetector.on('toneDetected', async (result) => {
-
-
             log.debug(`Processing toneDetected event for ${name}`);
             const { matchAverages, message } = result;
             const timestamp = new Date().getTime();
-
-
             let alertPromise;
             alertPromise = alertServer(TMODeptId)
             alertPromise
@@ -93,11 +75,8 @@ class DetectionService extends EventEmitter {
             await alertPromise;
             this.emit('toneDetected');
         });
-
         this.toneDetectors.push(tonesDetector);
         return tonesDetector;
     }
-
 }
-
 module.exports = { DetectionService };

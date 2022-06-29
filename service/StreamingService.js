@@ -64,5 +64,4 @@ class StreamingService {
         this.riff = riff;
     }
 }
-
 module.exports = { StreamingService };

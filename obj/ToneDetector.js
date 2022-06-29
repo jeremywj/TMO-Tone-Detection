@@ -20,19 +20,15 @@ class ToneDetector {
         this.TMODeptId = TMODeptId;
         this._matches = [];
         this._unmatchedCount = 0
-
     }
-
     get _matchCount() {
         return this._matches.length;
     }
-
     get matchAvg() {
         if (this._matches.length === 0)
             return null;
         return arrayAverage(this._matches);
     }
-
     get state() {
         if (this._matchCount === 0)
             return MATCH_STATES.WAITING;
@@ -42,13 +38,11 @@ class ToneDetector {
             return MATCH_STATES.MATCH_IN_PROGRESS;
         throw new Error("Invalid State");
     }
-
     processValue(value) {
         if (this.state === MATCH_STATES.MATCH) {
             log.warning(`Detector ${this.tone}Hz ignoring value ${value}Hz. Already matched `);
             return { warn: true };
         }
-
         if (this.__isMatch(value)) {
             this._matches.push(value);
             log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ±${this.tolerancePercent * 100}% [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
@@ -64,20 +58,16 @@ class ToneDetector {
             return { match: false, warn: false };
         }
     }
-
     __isMatch(value) {
         return value >= this.__lowerLimit && value <= this.__upperLimit;
     }
-
     get __lowerLimit() {
         return this.tone - (this.tone * this.tolerancePercent);
     }
-
     get __upperLimit() {
         const value = this.tone + (this.tone * this.tolerancePercent);
         return value;
     }
-
     get __matchLogLevel() {
         const matchPercent = this._matchCount / this.matchThreshold;
         if (matchPercent >= 0.75)
@@ -86,12 +76,10 @@ class ToneDetector {
             return "debug";
         return "silly"
     }
-
     resetMatch() {
         log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz Reset.`));
         this._matches = [];
         this._unmatchedCount = 0;
     }
 }
-
 module.exports = { ToneDetector, MATCH_STATES };

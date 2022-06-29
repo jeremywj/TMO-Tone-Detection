@@ -1,7 +1,6 @@
 const EventEmitter = require('events');
 const { calcRms } = require("../util/util");
 const log = require('../util/logger');
-
 class SilenceDetector extends EventEmitter {
     constructor({ silenceAmplitude, matchThreshold }) {
         super();
@@ -9,12 +8,10 @@ class SilenceDetector extends EventEmitter {
         this.silenceAmplitude = silenceAmplitude;
         this._silenceMatchCount = 0;
     }
-
     processValues({ raw }) {
         let rmsAmplitude = calcRms(raw);
         this.processRms(rmsAmplitude);
     }
-
     processRms(rmsAmplitude) {
         if (isNaN(rmsAmplitude))
             rmsAmplitude = 0;
@@ -28,10 +25,8 @@ class SilenceDetector extends EventEmitter {
             this.silenceDetected();
         }
     }
-
     silenceDetected() {
         this.emit('silenceDetected');
     }
 }
-
 module.exports = { SilenceDetector };
