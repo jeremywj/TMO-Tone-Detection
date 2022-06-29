@@ -9,6 +9,7 @@ const fs = require("fs");
 const wav = require('wav');
 const { Readable } = require("stream");
 const readable = new Readable();
+var gotRiff = false;
 readable._read = () => { }
 class DetectionService extends EventEmitter {
     constructor({ audioInterface, streamingService, sampleRate, frequencyScaleFactor = 1,
@@ -21,10 +22,13 @@ class DetectionService extends EventEmitter {
             readable.pipe(riff)
             riff.on('format', function (format) {
                 streamingService.setRiff(format)
+                gotRiff = true;
             });
 
             this._audioInterface.onData(async (rawBuffer) => {
-                readable.push(rawBuffer)
+                if (gotRiff == false) {
+                    readable.push(rawBuffer)
+                }
                 streamingService.streamAudioBuffer(rawBuffer)
                 const decoded = decodeRawAudioBuffer(rawBuffer);
                 this.__processData(decoded);
