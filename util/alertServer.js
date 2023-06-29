@@ -1,18 +1,14 @@
 const fetch = require('node-fetch');
 const log = require('./logger');
 const config = require("config");
+const ws = require("../service/ws")
 async function alertServer(id) {
-    var address = config.commandServer + id;
-    return fetch(address, {
-        method: 'post',
-        body: '',
-        headers: { 'Content-Type': 'application/json' },
+    ws.send({
+        action: "tone",
+        data: {
+            id: id
+        }
     })
-        .then(res => _processResponse(address))
-        .catch(err => {
-            log.error(`Alert ${address} Failed.`);
-        })
-    retur
 }
 async function _processResponse(address) {
     log.info(`Successfully Notified Server: ${address} `);
