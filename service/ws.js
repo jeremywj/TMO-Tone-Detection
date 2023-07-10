@@ -7,7 +7,6 @@ function wsConnect() {
     console.info("Attempting to connect to WS");
     ws = new WebSocket('wss://api.textmeout.com:3001/county');
     ws.on('error', function (err) {
-        //console.info(err);
     })
     ws.on('close', function () {
         ws = null;
@@ -36,21 +35,17 @@ function wsConnect() {
 
     ws.on('message', function message(data) {
         data = JSON.parse(data);
-        console.info(data)
         var action = data.action;
         switch (action) {
             case "tones":
-                //updateTones(data.data)
-                console.info(data.data)
+            //updateTones(data.data)
         }
     });
 }
 function send(data) {
-    console.info(data)
     if (checkWS() == false) {
         return false;
     }
-    console.info(ws.readyState)
     try {
         ws.send(JSON.stringify(data));
     } catch (err) {
@@ -67,7 +62,6 @@ function wsPing() {
             action: "ping"
         }));
     } catch (err) {
-        console.info(err)
         return false;
     }
     return true;

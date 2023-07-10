@@ -1,6 +1,6 @@
 {
   "name": "TMO Tone Detection",
-  "version": "1.02",
+  "version": "1.03",
   "description": "TMO Tone Detection",
   "homepage": "https://textmeout.com/",
   "main": "index.js",
