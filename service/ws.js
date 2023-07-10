@@ -1,8 +1,10 @@
 const { WebSocket } = require("ws")
 const config = require("config");
 var ws = null;
+var pjson = require('../package.json');
+var appVersion = pjson.version
 function wsConnect() {
-   console.info("Attempting to connect to WS");
+    console.info("Attempting to connect to WS");
     ws = new WebSocket('wss://api.textmeout.com:3001/county');
     ws.on('error', function (err) {
         //console.info(err);
@@ -17,7 +19,8 @@ function wsConnect() {
                 action: "auth",
                 data: {
                     county: config.county,
-                    pass: config.password
+                    pass: config.password,
+                    version: appVersion
                 }
             }
         ));
@@ -43,7 +46,7 @@ function wsConnect() {
     });
 }
 function send(data) {
-console.info(data)
+    console.info(data)
     if (checkWS() == false) {
         return false;
     }
