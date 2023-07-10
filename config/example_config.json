@@ -36,14 +36,6 @@
                 "TMODeptId": 89
             },
             {
-                "name": "Huntertown EMS",
-                "tones": [
-                    355,
-                    573
-                ],
-                "TMODeptId": 90
-            },
-            {
                 "name": "Huntertown Fire",
                 "tones": [
                     355
