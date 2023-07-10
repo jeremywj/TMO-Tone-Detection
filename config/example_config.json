@@ -1,4 +1,3 @@
-///rename to default.json
 {
     "testMode": false,
     "county": 8,
@@ -11,7 +10,7 @@
         "channels": 1
     },
     "stream": {
-        "server": "wcstream.scanwc.com",
+        "server": "streamURL",
         "port": 8000,
         "username": "source",
         "password": "password",
