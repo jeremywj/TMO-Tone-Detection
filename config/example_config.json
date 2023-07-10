@@ -1,0 +1,54 @@
+///rename to default.json
+{
+    "testMode": false,
+    "county": 8,
+    "password": "tmoPass",
+    "audio": {
+        "inputDevice": "hw:1,0",
+        "sampleRate": 44100,
+        "frequencyScaleFactor": 1,
+        "silenceAmplitude": 0.05,
+        "channels": 1
+    },
+    "stream": {
+        "server": "wcstream.scanwc.com",
+        "port": 8000,
+        "username": "source",
+        "password": "password",
+        "mount": "allenfire",
+        "name": "Allen County Fire",
+        "description": "Allen County Fire",
+        "genre": "Live Scanner"
+    },
+    "detection": {
+        "defaultMatchThreshold": 25,
+        "defaultTolerancePercent": 0.02,
+        "defaultResetTimeoutMs": 2000,
+        "defaultLockoutTimeoutMs": 5000,
+        "detectors": [
+            {
+                "name": "Northeast EMS",
+                "tones": [
+                    311,
+                    387
+                ],
+                "TMODeptId": 89
+            },
+            {
+                "name": "Huntertown EMS",
+                "tones": [
+                    355,
+                    573
+                ],
+                "TMODeptId": 90
+            },
+            {
+                "name": "Huntertown Fire",
+                "tones": [
+                    355
+                ],
+                "TMODeptId": 91
+            }
+        ]
+    }
+}
