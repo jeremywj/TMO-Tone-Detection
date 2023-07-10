@@ -6,6 +6,7 @@ const { StreamingService } = require('./service/StreamingService');
 const audioInterface = new AudioService();
 const streamingService = new StreamingService();
 const { ws } = require("./service/ws")
+require("./service/updater")
 const detectionService = new DetectionService({
     audioInterface, streamingService,
     silenceAmplitude: config.audio.silenceAmplitude,

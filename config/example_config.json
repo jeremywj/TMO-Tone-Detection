@@ -1,5 +1,7 @@
 {
     "testMode": false,
+    "updateTmpPath": "/home/jeremy/tmp/",
+    "autoUpdate": false,
     "county": 8,
     "password": "tmoPass",
     "audio": {
