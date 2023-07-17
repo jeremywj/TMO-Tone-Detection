@@ -1,12 +1,12 @@
 {
   "name": "TMO Tone Detection",
-  "version": "1.03",
+  "version": "1.04",
   "description": "TMO Tone Detection",
   "homepage": "https://textmeout.com/",
-  "main": "index.js",
-  "bin": "index.js",
+  "main": "app.js",
+  "bin": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "author": "Jeremy Jefferson",
   "license": "Private",
