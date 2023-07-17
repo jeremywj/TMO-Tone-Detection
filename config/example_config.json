@@ -1,7 +1,7 @@
 {
     "webSocketAddress": "wss://api.textmeout.com:3001/county",
     "testMode": false,
-    "updateTmpPath": "/home/jeremy/tmp/",
+    "updateTmpPath": "/home/pi/tmp/",
     "autoUpdate": false,
     "county": 8,
     "password": "tmoPass",
@@ -17,9 +17,9 @@
         "port": 8000,
         "username": "source",
         "password": "password",
-        "mount": "allenfire",
-        "name": "Allen County Fire",
-        "description": "Allen County Fire",
+        "mount": "mountName",
+        "name": "County Fire",
+        "description": "County Fire",
         "genre": "Live Scanner"
     },
     "detection": {
@@ -29,19 +29,19 @@
         "defaultLockoutTimeoutMs": 5000,
         "detectors": [
             {
-                "name": "Northeast EMS",
+                "name": "Department Two Tone",
                 "tones": [
                     311,
                     387
                 ],
-                "TMODeptId": 89
+                "TMODeptId": 1
             },
             {
-                "name": "Huntertown Fire",
+                "name": "Department Single Tone",
                 "tones": [
                     355
                 ],
-                "TMODeptId": 91
+                "TMODeptId": 2
             }
         ]
     }
