@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const log = require('./logger');
 const config = require("config");
 const ws = require("../service/ws")
