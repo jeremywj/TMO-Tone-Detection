@@ -1,4 +1,5 @@
 {
+    "webSocketAddress": "wss://api.textmeout.com:3001/county",
     "testMode": false,
     "updateTmpPath": "/home/jeremy/tmp/",
     "autoUpdate": false,

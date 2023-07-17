@@ -5,7 +5,7 @@ var pjson = require('../package.json');
 var appVersion = pjson.version
 function wsConnect() {
     console.info("Attempting to connect to WS");
-    ws = new WebSocket('wss://api.textmeout.com:3001/county');
+    ws = new WebSocket(config.webSocketAddress);
     ws.on('error', function (err) {
     })
     ws.on('close', function () {
