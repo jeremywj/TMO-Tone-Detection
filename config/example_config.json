@@ -27,6 +27,7 @@
         "defaultTolerancePercent": 0.02,
         "defaultResetTimeoutMs": 2000,
         "defaultLockoutTimeoutMs": 5000,
+        "clarityThreshold": 0.89,
         "detectors": [
             {
                 "name": "Department Two Tone",
