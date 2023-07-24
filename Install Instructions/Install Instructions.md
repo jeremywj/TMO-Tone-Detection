@@ -1,0 +1,45 @@
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.bashrc
+nvm install node
+npm install pm2 -g
+sudo apt -y update
+sudo apt -y upgrade
+sudo apt -y install ffmpeg sox mplayer libsox-fmt-mp3 git
+wget https://github.com/jeremywj/TMO-Tone-Detection/archive/refs/tags/1.02.zip -O TMO.zip
+unzip TMO.zip
+rm -f TMO.zip
+mv TMO-Tone-Detection-1.02 TMO
+cd TMO
+npm install
+pm2 start app.js -o ~/logs/TMO-out.log -e ~/logs/TMO-err.log --name TMO
+pm2 install pm2-logrotate
+pm2 save
+pm2 startup  
+
+<copy and paste all above commands and copy/paste pm2 startup output>
+
+
+sudo raspi-config
+	change timezone to eastern
+	change hostname
+Disable onboard audio
+	sudo nano /etc/modprobe.d/alsa-blacklist.conf
+	add line: blacklist snd_bcm2835
+
+sudo ssh-keygen
+	Copy public key to command server
+Create file: /etc/systemd/system/sshtun.service
+	<user sshtun.service file and update user@server>
+
+sudo systemctl enable sshtun.service
+sudo nano /etc/ssh/sshd_config
+	uncomment "PubkeyAuthentication yes"
+nano /home/pi/.ssh/authorized_keys
+	<use authorized_keys file in repo>
+
+Disable IPv6
+	sudo nano /etc/sysctl.conf
+		add to top of file: net.ipv6.conf.all.disable_ipv6 = 1
+Remove password auth from /etc/ssh/sshd_confid
+Remove content of /etc/motd
