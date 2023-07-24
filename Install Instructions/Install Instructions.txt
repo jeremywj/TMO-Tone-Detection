@@ -23,9 +23,6 @@ pm2 startup
 sudo raspi-config
 	change timezone to eastern
 	change hostname
-Disable onboard audio
-	sudo nano /etc/modprobe.d/alsa-blacklist.conf
-	add line: blacklist snd_bcm2835
 
 sudo ssh-keygen
 	Copy public key to command server
@@ -33,13 +30,17 @@ Create file: /etc/systemd/system/sshtun.service
 	<user sshtun.service file and update user@server>
 
 sudo systemctl enable sshtun.service
+
 sudo nano /etc/ssh/sshd_config
 	uncomment "PubkeyAuthentication yes"
+
+mkdir .ssh
 nano /home/pi/.ssh/authorized_keys
 	<use authorized_keys file in repo>
 
 Disable IPv6
 	sudo nano /etc/sysctl.conf
 		add to top of file: net.ipv6.conf.all.disable_ipv6 = 1
-Remove password auth from /etc/ssh/sshd_confid
+
+Remove password auth from /etc/ssh/sshd_config
 Remove content of /etc/motd
