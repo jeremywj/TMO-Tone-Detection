@@ -70,7 +70,7 @@ class TonesDetector extends EventEmitter {
             `Match Averages: ${matchAvgs.map(avg => `${avg}Hz`).join(', ')} `;
         log[this.__matchLogLevel()](chalk.green(message));
         this.__buildToneDetectors(); //Reset tone detectors only. Do not reset lockout
-        this.emit('toneDetected', { matchAverages: matchAvgs, message });
+        this.emit('toneDetected', matchAvgs);
     }
     toObj() {
         return {

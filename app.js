@@ -25,12 +25,13 @@ config.detection.detectors.forEach(detectorConfig => {
         fixedTolerance: detectorConfig.fixedTolerance ? detectorConfig.fixedTolerance : null,
     };
     if (options.fixedTolerance == null) {
-        log.info(`${options.name} : ${options.tones.map(v => `${v}Hz`).join(', ')}. `
-            + `Match Threshold: ${options.matchThreshold}, Tolerance: ${options.tolerancePercent * 100}%`);
+        this.toleranceText = `${options.tolerancePercent * 100}%`;
+
     } else {
-        log.info(`${options.name} : ${options.tones.map(v => `${v}Hz`).join(', ')}. `
-            + `Match Threshold: ${options.matchThreshold}, Tolerance: ${options.fixedTolerance}`);
+        this.toleranceText = `${options.fixedTolerance}`;
     }
+    log.info(`${options.name} : ${options.tones.map(v => `${v}Hz`).join(', ')}. `
+        + `Match Threshold: ${options.matchThreshold}, Tolerance: ${this.toleranceText}`);
     detectionService.addToneDetector(options);
 });
 audioInterface.start();

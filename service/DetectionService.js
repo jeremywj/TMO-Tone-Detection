@@ -60,8 +60,8 @@ class DetectionService extends EventEmitter {
             lockoutTimeoutMs
 
         });
-        tonesDetector.on('toneDetected', async () => {
-            alertServer(TMODeptId)
+        tonesDetector.on('toneDetected', async (caughtTones) => {
+            alertServer(TMODeptId, caughtTones)
             this.emit('toneDetected');
         });
         this.toneDetectors.push(tonesDetector);

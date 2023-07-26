@@ -47,12 +47,12 @@ class ToneDetector {
         if (this.__isMatch(value)) {
             this._matches.push(value);
             if (this.fixedTolerance == null) {
-                log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ±${this.tolerancePercent * 100}% [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
-                    `Matches @ ${value}Hz. Count ${this._matchCount}/${this.matchThreshold} `));
+                this.toleranceText = `±${this.tolerancePercent * 100}%`;
             } else {
-                log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ±${this.fixedTolerance} [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
-                    `Matches @ ${value}Hz. Count ${this._matchCount}/${this.matchThreshold} `));
+                this.toleranceText = `±${this.fixedTolerance}`;
             }
+            log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ${this.toleranceText} [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
+                `Matches @ ${value}Hz. Count ${this._matchCount}/${this.matchThreshold} `));
             return { match: true, warn: false };
         }
         else {
