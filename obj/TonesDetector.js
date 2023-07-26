@@ -4,13 +4,14 @@ const chalk = require('chalk');
 const log = require('../util/logger');
 const { SilenceDetector } = require("./SilenceDetector");
 class TonesDetector extends EventEmitter {
-    constructor({ name, tones = [], TMODeptId, tolerancePercent = 0.02,
+    constructor({ name, tones = [], TMODeptId, tolerancePercent = 0.02, fixedTolerance = null,
         matchThreshold = 8, silenceAmplitude = 0.05,
         lockoutTimeoutMs = 5000, resetTimeoutMs = 7000 }) {
         super();
         this.name = name ? name : ``;
         this.tones = tones;
         this.tolerancePercent = tolerancePercent;
+        this.fixedTolerance = fixedTolerance;
         this.matchThreshold = matchThreshold;
         this.TMODeptId = TMODeptId;
         this.__buildToneDetectors();
@@ -30,6 +31,7 @@ class TonesDetector extends EventEmitter {
                 tone,
                 TMODeptId: this.TMODeptId,
                 tolerancePercent: this.tolerancePercent,
+                fixedTolerance: this.fixedTolerance,
                 matchThreshold: this.matchThreshold
             }
             ));
@@ -75,6 +77,7 @@ class TonesDetector extends EventEmitter {
             name: this.name,
             tones: this.tones,
             tolerancePercent: this.tolerancePercent,
+            fixedTolerance: this.fixedTolerance,
             matchThreshold: this.matchThreshold,
             TMODeptId: this.TMODeptId
         }

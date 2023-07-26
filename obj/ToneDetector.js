@@ -8,7 +8,7 @@ const chalk = require('chalk');
 const { arrayAverage } = require("../util/util");
 
 class ToneDetector {
-    constructor({ tone, TMODeptId, tolerancePercent, matchThreshold }) {
+    constructor({ tone, TMODeptId, tolerancePercent, fixedTolerance, matchThreshold }) {
         const _tone = Number(tone);
         if (isNaN(_tone)) {
             log.error(`The provided tone ${tone} is not a valid number.`);
@@ -16,6 +16,7 @@ class ToneDetector {
         }
         this.tone = _tone;
         this.tolerancePercent = tolerancePercent;
+        this.fixedTolerance = fixedTolerance;
         this.matchThreshold = matchThreshold;
         this.TMODeptId = TMODeptId;
         this._matches = [];
@@ -45,8 +46,13 @@ class ToneDetector {
         }
         if (this.__isMatch(value)) {
             this._matches.push(value);
-            log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ±${this.tolerancePercent * 100}% [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
-                `Matches @ ${value}Hz. Count ${this._matchCount}/${this.matchThreshold} `));
+            if (this.fixedTolerance == null) {
+                log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ±${this.tolerancePercent * 100}% [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
+                    `Matches @ ${value}Hz. Count ${this._matchCount}/${this.matchThreshold} `));
+            } else {
+                log[this.__matchLogLevel](chalk.yellow(`Detector ${this.tone}Hz ±${this.fixedTolerance} [${this.__lowerLimit}Hz - ${this.__upperLimit}Hz] ` +
+                    `Matches @ ${value}Hz. Count ${this._matchCount}/${this.matchThreshold} `));
+            }
             return { match: true, warn: false };
         }
         else {
@@ -62,11 +68,16 @@ class ToneDetector {
         return value >= this.__lowerLimit && value <= this.__upperLimit;
     }
     get __lowerLimit() {
-        return this.tone - (this.tone * this.tolerancePercent);
+        if (this.fixedTolerance == null) {
+            return this.tone - (this.tone * this.tolerancePercent);
+        }
+        return this.tone - this.fixedTolerance;
     }
     get __upperLimit() {
-        const value = this.tone + (this.tone * this.tolerancePercent);
-        return value;
+        if (this.fixedTolerance == null) {
+            return this.tone + (this.tone * this.tolerancePercent);
+        }
+        return this.tone + this.fixedTolerance;
     }
     get __matchLogLevel() {
         const matchPercent = this._matchCount / this.matchThreshold;

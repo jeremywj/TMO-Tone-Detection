@@ -46,7 +46,7 @@ class DetectionService extends EventEmitter {
         });
     }
     addToneDetector({
-        name, tones = [], TMODeptId, tolerancePercent,
+        name, tones = [], TMODeptId, tolerancePercent, fixedTolerance,
         matchThreshold, resetTimeoutMs, lockoutTimeoutMs
     }) {
         const tonesDetector = new TonesDetector({
@@ -55,6 +55,7 @@ class DetectionService extends EventEmitter {
             TMODeptId,
             matchThreshold,
             tolerancePercent,
+            fixedTolerance,
             resetTimeoutMs,
             lockoutTimeoutMs
 

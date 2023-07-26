@@ -5,7 +5,7 @@ const { AudioService } = require('./service/AudioService');
 const { StreamingService } = require('./service/StreamingService');
 const audioInterface = new AudioService();
 const streamingService = new StreamingService();
-const { ws } = require("./service/ws")
+require("./service/ws")
 require("./service/updater")
 const detectionService = new DetectionService({
     audioInterface, streamingService,
@@ -22,9 +22,15 @@ config.detection.detectors.forEach(detectorConfig => {
         lockoutTimeoutMs: detectorConfig.lockoutTimeoutMs ? detectorConfig.lockoutTimeoutMs : config.detection.defaultLockoutTimeoutMs,
         matchThreshold: detectorConfig.matchThreshold ? detectorConfig.matchThreshold : config.detection.defaultMatchThreshold,
         tolerancePercent: detectorConfig.tolerancePercent ? detectorConfig.tolerancePercent : config.detection.defaultTolerancePercent,
+        fixedTolerance: detectorConfig.fixedTolerance ? detectorConfig.fixedTolerance : null,
     };
-    log.info(`${options.name} : ${options.tones.map(v => `${v}Hz`).join(', ')}. `
-        + `Match Threshold: ${options.matchThreshold}, Tolerance: ${options.tolerancePercent * 100}%`);
+    if (options.fixedTolerance == null) {
+        log.info(`${options.name} : ${options.tones.map(v => `${v}Hz`).join(', ')}. `
+            + `Match Threshold: ${options.matchThreshold}, Tolerance: ${options.tolerancePercent * 100}%`);
+    } else {
+        log.info(`${options.name} : ${options.tones.map(v => `${v}Hz`).join(', ')}. `
+            + `Match Threshold: ${options.matchThreshold}, Tolerance: ${options.fixedTolerance}`);
+    }
     detectionService.addToneDetector(options);
 });
 audioInterface.start();
