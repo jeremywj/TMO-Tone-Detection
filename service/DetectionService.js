@@ -1,11 +1,8 @@
 const { TonesDetector } = require("../obj/TonesDetector");
-const log = require('../util/logger');
-const chalk = require('chalk');
 const { AudioProcessor } = require("../obj/AudioProcessor");
 const { decodeRawAudioBuffer } = require("../util/util");
 const EventEmitter = require('events');
 const { alertServer } = require('../util/alertServer');
-const fs = require("fs");
 const wav = require('wav');
 const { Readable } = require("stream");
 const readable = new Readable();
@@ -62,17 +59,8 @@ class DetectionService extends EventEmitter {
             lockoutTimeoutMs
 
         });
-        tonesDetector.on('toneDetected', async (result) => {
-            log.debug(`Processing toneDetected event for ${name}`);
-            const { matchAverages, message } = result;
-            const timestamp = new Date().getTime();
-            let alertPromise;
-            alertPromise = alertServer(TMODeptId)
-            // alertPromise
-            //     .catch(err => {
-            //         log.error(`Alert Error`);
-            //     })
-            // await alertPromise;
+        tonesDetector.on('toneDetected', async () => {
+            alertServer(TMODeptId)
             this.emit('toneDetected');
         });
         this.toneDetectors.push(tonesDetector);

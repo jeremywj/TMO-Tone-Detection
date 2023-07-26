@@ -1,4 +1,3 @@
-const log = require('./logger');
 const config = require("config");
 const ws = require("../service/ws")
 function alertServer(id, attempt = 0) {
@@ -20,9 +19,6 @@ function alertServer(id, attempt = 0) {
     attempt++;
     setTimeout(alertServer, 1000, id, attempt)
     return false;
-}
-async function _processResponse(address) {
-    log.info(`Successfully Notified Server: ${address} `);
 }
 
 module.exports = { alertServer };
