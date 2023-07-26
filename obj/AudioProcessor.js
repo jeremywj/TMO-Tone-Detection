@@ -6,7 +6,7 @@ const moment = require("moment");
 const { SilenceDetector } = require("./SilenceDetector");
 const config = require("config");
 const CLARITY_THRESHOLD = config.detection.clarityThreshold ? config.detection.clarityThreshold : 0.9;
-const SAMPLE_SIZE = 200;
+const SAMPLE_SIZE = config.audio.sampleSize ? config.audio.sampleSize : 200;
 class AudioProcessor extends EventEmitter {
     constructor({ sampleRate, silenceAmplitude, frequencyScaleFactor }) {
         super();

@@ -8,6 +8,7 @@
     "audio": {
         "inputDevice": "hw:1,0",
         "sampleRate": 44100,
+        "sampleSize": 200,
         "frequencyScaleFactor": 1,
         "silenceAmplitude": 0.05,
         "channels": 1
