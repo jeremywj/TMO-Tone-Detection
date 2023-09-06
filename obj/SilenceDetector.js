@@ -28,8 +28,9 @@ class SilenceDetector extends EventEmitter {
         if (this._silenceMatchCount >= this.matchThreshold) {
             this.silenceDetected();
         } else {
-            sc = Date.now / 1000;
+            sc = Date.now() / 1000;
         }
+        let now = Date.now() / 1000;
         if ((now - sc) < 20) {
             silence = false;
             let n = Math.floor(now - sc)
