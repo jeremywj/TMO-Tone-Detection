@@ -1,9 +1,8 @@
 const AutoGitUpdate = require('auto-git-update');
 const config = require("config");
 
-var int = 60 //minutes
-
-int = int * 60 * 1000;
+var interval = config.updateInterval ? config.updateInterval : 60
+interval = interval * 60 * 1000;
 
 function update() {
     if (config.autoUpdate) {
@@ -21,4 +20,4 @@ function update() {
 }
 
 update();
-setInterval(update, int);
+setInterval(update, interval);

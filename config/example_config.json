@@ -3,6 +3,7 @@
     "testMode": false,
     "updateTmpPath": "/home/pi/tmp/",
     "autoUpdate": false,
+    "updateInterval": 60,
     "county": 8,
     "password": "tmoPass",
     "audio": {
