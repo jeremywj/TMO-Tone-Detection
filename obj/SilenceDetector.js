@@ -32,10 +32,12 @@ class SilenceDetector extends EventEmitter {
         }
         let now = Date.now() / 1000;
         if ((now - sc) < 20) {
+            if (silence) {
+                console.info("Audio detected")
+            }
             silence = false;
             let n = Math.floor(now - sc)
             if (n != lastSC) {
-                console.info(n)
                 ws.send({
                     action: "updateSilence",
                     data: {
@@ -46,7 +48,7 @@ class SilenceDetector extends EventEmitter {
             }
         } else {
             if (silence == false) {
-                console.info("Over 20 seconds");
+                console.info("Audio is silent");
                 silence = true;
                 ws.send({
                     action: "updateSilence",
