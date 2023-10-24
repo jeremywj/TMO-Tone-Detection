@@ -29,7 +29,7 @@ function updateStatus(data) {
         applyUpdate();
         return;
     }
-    console.info("Update to date (" + data.currentVersion + ")");
+    console.info("Up to date (" + data.currentVersion + ")");
 }
 function applyUpdate() {
     console.info("Preparing to update...");
@@ -46,3 +46,5 @@ function applyUpdate() {
 }
 update();
 setInterval(update, interval);
+
+module.exports = { update }
