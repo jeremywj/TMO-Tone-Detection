@@ -1,6 +1,6 @@
 const { WebSocket } = require("ws")
 const config = require("config");
-const updater = require("updater");
+const updater = require("./updater");
 var ws = null;
 var pjson = require('../package.json');
 var appVersion = pjson.version

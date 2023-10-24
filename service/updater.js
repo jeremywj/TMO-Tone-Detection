@@ -47,4 +47,4 @@ function applyUpdate() {
 update();
 setInterval(update, interval);
 
-module.exports = { update }
+module.exports = { update };
