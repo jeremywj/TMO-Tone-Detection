@@ -1,11 +1,10 @@
-
+sudo apt -y install ffmpeg sox mplayer libsox-fmt-mp3 git unzip curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source ~/.bashrc
 nvm install node
 npm install pm2 -g
 sudo apt -y update
 sudo apt -y upgrade
-sudo apt -y install ffmpeg sox mplayer libsox-fmt-mp3 git
 wget https://github.com/jeremywj/TMO-Tone-Detection/archive/refs/tags/1.02.zip -O TMO.zip
 unzip TMO.zip
 rm -f TMO.zip
