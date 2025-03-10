@@ -5,10 +5,10 @@ nvm install node
 npm install pm2 -g
 sudo apt -y update
 sudo apt -y upgrade
-wget https://github.com/jeremywj/TMO-Tone-Detection/archive/refs/tags/1.02.zip -O TMO.zip
+wget https://github.com/jeremywj/TMO-Tone-Detection/archive/refs/tags/1.13.zip -O TMO.zip
 unzip TMO.zip
 rm -f TMO.zip
-mv TMO-Tone-Detection-1.02 TMO
+mv TMO-Tone-Detection-1.13 TMO
 cd TMO
 npm install
 pm2 start app.js -o ~/logs/TMO-out.log -e ~/logs/TMO-err.log --name TMO
